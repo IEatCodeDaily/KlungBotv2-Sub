@@ -137,6 +137,7 @@ void listMidiPins() {
 
 void modifyMidiPin(uint8_t midiOutputPin, uint8_t gpioPin) {
   midiPins[midiOutputPin] = gpioPin;
+  Serial.printf("GPIO %d set for MIDI Pin %d\n", gpioPin, midiOutputPin);
 }
 
 void clearMidiPins() {

@@ -24,8 +24,7 @@ struct MIDIMessage {
 #endif
 
 struct PingMessage {
-  uint8_t id;
-  char* name[24];
+  uint8_t status = 1;
 };
 
 struct PairingMessage {
@@ -59,6 +58,9 @@ public:
 
   void setPairingMessage(const PairingMessage &message);
   PairingMessage getPairingMessage() const;
+
+  void setPingMessage(const PingMessage &message);
+  PingMessage getPingMessage() const;
 
   PacketType getPacketType() const;
   void toBytes(uint8_t *bytes) const;

@@ -22,6 +22,14 @@ PairingMessage ESPNowPacket::getPairingMessage() const {
   return pairingMessage;
 }
 
+void ESPNowPacket::setPingMessage(const PingMessage &message){
+  pingMessage = message;
+}
+
+PingMessage ESPNowPacket::getPingMessage() const {
+  return pingMessage;
+}
+
 PacketType ESPNowPacket::getPacketType() const {
   return packetType;
 }

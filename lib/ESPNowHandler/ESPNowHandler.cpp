@@ -16,13 +16,23 @@ void espNowRecv_cb(const uint8_t *mac_addr, const uint8_t *data, int data_len){
     // Create an ESPNowPacket from received data
   ESPNowPacket receivedPacket = ESPNowPacket::fromBytes(data);
 
-  // Check if the packet is a MIDI message
+  //Check Packet type
   if (receivedPacket.getPacketType() == PacketType::MIDI) {
     // Get the MIDI message from the packet
     MIDIMessage midiMsg = receivedPacket.getMidiMessage();
     ESP_LOGD(TAG_MIDI, "Rcvd MIDI message: %02x %02x %02x", midiMsg.status, midiMsg.data1, midiMsg.data2);
     midiBuffer.push(midiMsg);
+    return;
   }
+  else if (receivedPacket.getPacketType() == PacketType::PING) {
+    //send back a default ping message
+    ESPNowPacket pingPacket(PacketType::PING);
+    uint8_t buffer[pingPacket.getPacketSize()];
+    pingPacket.toBytes(buffer);
+    esp_now_send(mac_addr, buffer, pingPacket.getPacketSize());
+    return;
+  }
+  
 }
 
 void espNow_init() {
